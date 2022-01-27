@@ -130,4 +130,3 @@ ax6.set_ylim(ybottom,ytop)
 plt.tight_layout()
 
 plt.show()
-
