@@ -5,32 +5,38 @@ import difflib
 import scipy.sparse as sp
 import numpy as np
 
+
 plt.rcParams['figure.figsize'] = 15, 6
 
-Nx = 2**7
-Lx= 6 * pi
-dx = Lx/Nx
+Nx = 2**7 # Number of position space grid points along x-direction
+Lx= 6 * pi # Box width along x-direction
+dx = Lx/Nx # Spatial separation along x-direction
 
-Ny = 2**7
-Ly= 6 * pi
-dy = Ly/Ny
+Ny = 2**7 # Number of position space grid points along y-direction
+Ly= 6 * pi # Box width along y-direction
+dy = Ly/Ny # Spatial separation along y-direction
 
-x = linspace(-0.5*Lx, 0.5*Lx, Nx)
-y = linspace(-0.5*Ly, 0.5*Ly, Ny)
+x = linspace(-0.5*Lx, 0.5*Lx, Nx) # x-position space
+y = linspace(-0.5*Ly, 0.5*Ly, Ny) # y-position space
 
 X, Y = meshgrid(x,y)
 
-kx = fftfreq(Nx, dx)
-ky = fftfreq(Ny, dy)
+kx = fftfreq(Nx, dx) # x-fourier space
+ky = fftfreq(Ny, dy) # y-fourier space
 
 KX, KY = meshgrid(kx, ky)
 
+# This function calculates the laplacian of given 2d signal using FFT
 def laplacian_using_fft(some_2d_signal):
     Fhat = fft2(some_2d_signal)
+    
     F_xx = ifft2( (1j * KX) * (1j * KX) *  Fhat)
     F_yy = ifft2( (1j * KY) * (1j * KY) *  Fhat)
 
     return real(F_xx + F_yy)
+
+
+
 
 
 
